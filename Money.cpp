@@ -6,15 +6,13 @@
 
 using namespace std;
 
-// Конструктор по умолчанию
 Money::Money() : rubles(0), kopeks(0) {}
 
-// Конструктор с параметрами
+
 Money::Money(unsigned int r, short int k) : rubles(r), kopeks(k) {
     normalize();
 }
 
-// Нормализация (если копеек больше 100 или меньше 0, переводим в рубли)
 void Money::normalize() {
     if (kopeks >= 100) {
         rubles += kopeks / 100;
@@ -24,20 +22,18 @@ void Money::normalize() {
         rubles -= (abs(kopeks) / 100) + 1;
         kopeks = 100 - abs(kopeks) % 100;
     }
-    if (rubles < 0) rubles = 0;  // Количество рублей не может быть меньше нуля
+    if (rubles < 0) rubles = 0;  
 }
 
-// Операция добавления копейки
 Money& Money::operator++() {
     ++kopeks;
-    normalize();  // Просто нормализуем без вывода
+    normalize();  
     return *this;
 }
 
-// Операция вычитания копейки
 Money& Money::operator--() {
     if (kopeks == 0 && rubles == 0) {
-        cout << "Ошибка: отрицательное количество денег!" << endl;
+        cout << "ГЋГёГЁГЎГЄГ : Г®ГІГ°ГЁГ¶Г ГІГҐГ«ГјГ­Г®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г¤ГҐГ­ГҐГЈ!" << endl;
         return *this;
     }
     if (kopeks == 0) {
@@ -47,11 +43,11 @@ Money& Money::operator--() {
     else {
         --kopeks;
     }
-    normalize();  // Просто нормализуем без вывода
+    normalize();  // ГЏГ°Г®Г±ГІГ® Г­Г®Г°Г¬Г Г«ГЁГ§ГіГҐГ¬ ГЎГҐГ§ ГўГ»ГўГ®Г¤Г 
     return *this;
 }
 
-// Операция добавления копеек к объекту Money
+// ГЋГЇГҐГ°Г Г¶ГЁГї Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГї ГЄГ®ГЇГҐГҐГЄ ГЄ Г®ГЎГєГҐГЄГІГі Money
 Money Money::operator+(unsigned int kopeksToAdd) const {
     Money result = *this;
     result.kopeks += kopeksToAdd;
@@ -59,12 +55,12 @@ Money Money::operator+(unsigned int kopeksToAdd) const {
     return result;
 }
 
-// Операция вычитания копеек из объекта Money
+// ГЋГЇГҐГ°Г Г¶ГЁГї ГўГ»Г·ГЁГІГ Г­ГЁГї ГЄГ®ГЇГҐГҐГЄ ГЁГ§ Г®ГЎГєГҐГЄГІГ  Money
 Money Money::operator-(unsigned int kopeksToSubtract) const {
     Money result = *this;
     if (result.kopeks < kopeksToSubtract) {
         if (result.rubles == 0) {
-            cout << "Ошибка: недостаточно средств для вычитания!" << endl;
+            cout << "ГЋГёГЁГЎГЄГ : Г­ГҐГ¤Г®Г±ГІГ ГІГ®Г·Г­Г® Г±Г°ГҐГ¤Г±ГІГў Г¤Г«Гї ГўГ»Г·ГЁГІГ Г­ГЁГї!" << endl;
             return result;
         }
         result.rubles -= 1;
@@ -77,29 +73,29 @@ Money Money::operator-(unsigned int kopeksToSubtract) const {
     return result;
 }
 
-// Операция явного приведения к unsigned int (только рубли)
+// ГЋГЇГҐГ°Г Г¶ГЁГї ГїГўГ­Г®ГЈГ® ГЇГ°ГЁГўГҐГ¤ГҐГ­ГЁГї ГЄ unsigned int (ГІГ®Г«ГјГЄГ® Г°ГіГЎГ«ГЁ)
 Money::operator unsigned int() const {
     return rubles;
 }
 
-// Операция неявного приведения к double (копейки в рубли)
+// ГЋГЇГҐГ°Г Г¶ГЁГї Г­ГҐГїГўГ­Г®ГЈГ® ГЇГ°ГЁГўГҐГ¤ГҐГ­ГЁГї ГЄ double (ГЄГ®ГЇГҐГ©ГЄГЁ Гў Г°ГіГЎГ«ГЁ)
 Money::operator double() const {
     return kopeks / 100.0;
 }
 
-// Вывод Money на экран
+// Г‚Г»ГўГ®Г¤ Money Г­Г  ГЅГЄГ°Г Г­
 void Money::display() const {
-    cout << rubles << " руб. " << kopeks << " коп." << endl;
+    cout << rubles << " Г°ГіГЎ. " << kopeks << " ГЄГ®ГЇ." << endl;
 }
 
-// Метод для ввода данных с клавиатуры
+// ГЊГҐГІГ®Г¤ Г¤Г«Гї ГўГўГ®Г¤Г  Г¤Г Г­Г­Г»Гµ Г± ГЄГ«Г ГўГЁГ ГІГіГ°Г»
 void Money::input() {
     string input;
-    cout << "Введите количество рублей: ";
+    cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г°ГіГЎГ«ГҐГ©: ";
     while (true) {
         cin >> input;
 
-        // Проверяем, что ввод состоит только из цифр
+        // ГЏГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГўГўГ®Г¤ Г±Г®Г±ГІГ®ГЁГІ ГІГ®Г«ГјГЄГ® ГЁГ§ Г¶ГЁГґГ°
         bool valid = true;
         for (char c : input) {
             if (!isdigit(c)) {
@@ -110,26 +106,26 @@ void Money::input() {
 
         if (valid) {
             try {
-                rubles = stoul(input); // Преобразуем строку в unsigned int
+                rubles = stoul(input); // ГЏГ°ГҐГ®ГЎГ°Г Г§ГіГҐГ¬ Г±ГІГ°Г®ГЄГі Гў unsigned int
                 break;
             }
             catch (invalid_argument& e) {
-                cout << "Ошибка: введите положительное целое число для рублей!" << endl;
+                cout << "ГЋГёГЁГЎГЄГ : ГўГўГҐГ¤ГЁГІГҐ ГЇГ®Г«Г®Г¦ГЁГІГҐГ«ГјГ­Г®ГҐ Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г® Г¤Г«Гї Г°ГіГЎГ«ГҐГ©!" << endl;
             }
             catch (out_of_range& e) {
-                cout << "Ошибка: число слишком велико для типа unsigned int!" << endl;
+                cout << "ГЋГёГЁГЎГЄГ : Г·ГЁГ±Г«Г® Г±Г«ГЁГёГЄГ®Г¬ ГўГҐГ«ГЁГЄГ® Г¤Г«Гї ГІГЁГЇГ  unsigned int!" << endl;
             }
         }
         else {
-            cout << "Ошибка: введите положительное целое число для рублей!" << endl;
+            cout << "ГЋГёГЁГЎГЄГ : ГўГўГҐГ¤ГЁГІГҐ ГЇГ®Г«Г®Г¦ГЁГІГҐГ«ГјГ­Г®ГҐ Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г® Г¤Г«Гї Г°ГіГЎГ«ГҐГ©!" << endl;
         }
     }
 
-    cout << "Введите количество копеек: ";
+    cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЄГ®ГЇГҐГҐГЄ: ";
     while (true) {
         cin >> input;
 
-        // Проверяем, что ввод состоит только из цифр
+        // ГЏГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГўГўГ®Г¤ Г±Г®Г±ГІГ®ГЁГІ ГІГ®Г«ГјГЄГ® ГЁГ§ Г¶ГЁГґГ°
         bool valid = true;
         for (char c : input) {
             if (!isdigit(c)) {
@@ -140,18 +136,18 @@ void Money::input() {
 
         if (valid) {
             try {
-                kopeks = stoi(input); // Преобразуем строку в short int
+                kopeks = stoi(input); // ГЏГ°ГҐГ®ГЎГ°Г Г§ГіГҐГ¬ Г±ГІГ°Г®ГЄГі Гў short int
                 break;
             }
             catch (invalid_argument& e) {
-                cout << "Ошибка: введите целое число для копеек!" << endl;
+                cout << "ГЋГёГЁГЎГЄГ : ГўГўГҐГ¤ГЁГІГҐ Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г® Г¤Г«Гї ГЄГ®ГЇГҐГҐГЄ!" << endl;
             }
             catch (out_of_range& e) {
-                cout << "Ошибка: число слишком велико для типа short int!" << endl;
+                cout << "ГЋГёГЁГЎГЄГ : Г·ГЁГ±Г«Г® Г±Г«ГЁГёГЄГ®Г¬ ГўГҐГ«ГЁГЄГ® Г¤Г«Гї ГІГЁГЇГ  short int!" << endl;
             }
         }
         else {
-            cout << "Ошибка: введите целое число для копеек!" << endl;
+            cout << "ГЋГёГЁГЎГЄГ : ГўГўГҐГ¤ГЁГІГҐ Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г® Г¤Г«Гї ГЄГ®ГЇГҐГҐГЄ!" << endl;
         }
     }
 
